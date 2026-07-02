@@ -424,12 +424,41 @@
 }
 
 .auth-mis-panel {
-    background: linear-gradient(160deg, #eff6ff 0%, #f8fafc 50%, #f1f5f9 100%);
-    border-right: 1px solid #e2e8f0;
+    background:
+        radial-gradient(ellipse 85% 65% at 15% 15%, rgb(37 99 235 / 0.16), transparent 55%),
+        radial-gradient(ellipse 70% 55% at 85% 75%, rgb(59 130 246 / 0.12), transparent 50%),
+        linear-gradient(165deg, #dbeafe 0%, #eff6ff 38%, #f0f9ff 72%, #f8fafc 100%);
+    border-right: 1px solid #bfdbfe;
+}
+
+.auth-mis-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgb(37 99 235 / 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(37 99 235 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+.auth-mis-glow {
+    position: absolute;
+    top: 10%;
+    left: -5%;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(37 99 235 / 0.18) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .auth-mis-panel-mobile {
-    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+    background:
+        radial-gradient(ellipse 90% 80% at 50% 0%, rgb(37 99 235 / 0.14), transparent 58%),
+        linear-gradient(180deg, #dbeafe 0%, #eff6ff 45%, #ffffff 100%);
+    border-bottom: 1px solid #bfdbfe;
 }
 
 /* LedgerFlow — authentication pages */

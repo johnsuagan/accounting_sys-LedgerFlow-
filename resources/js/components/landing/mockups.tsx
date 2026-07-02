@@ -1,3 +1,4 @@
+import AppLogoIcon from '@/components/app-logo-icon';
 import { cn } from '@/lib/utils';
 
 function MiniBar({ height, className }: { height: string; className?: string }) {
@@ -21,7 +22,9 @@ export function HeroDashboardMockup({ className }: { className?: string }) {
             <div className="flex min-h-[420px]">
                 <aside className="hidden w-44 shrink-0 border-r border-[#E2E8F0] bg-[#F8FAFC] p-3 sm:block">
                     <div className="mb-4 flex items-center gap-2">
-                        <div className="size-6 rounded-md bg-[#2563EB]" />
+                        <div className="flex size-6 items-center justify-center rounded-md bg-[#2563EB] text-white">
+                            <AppLogoIcon className="size-3.5" />
+                        </div>
                         <span className="text-xs font-semibold text-[#0F172A]">LedgerFlow</span>
                     </div>
                     {['Dashboard', 'Journal Entries', 'General Ledger', 'T-Accounts', 'Financial Statements', 'Analysis'].map(

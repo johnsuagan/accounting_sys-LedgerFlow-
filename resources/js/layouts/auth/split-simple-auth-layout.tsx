@@ -7,12 +7,14 @@ interface SplitSimpleAuthLayoutProps {
     children: ReactNode;
     title?: string;
     description?: string;
+    formMaxWidth?: string;
 }
 
 export default function SplitSimpleAuthLayout({
     children,
     title = 'Sign in',
     description,
+    formMaxWidth = '400px',
 }: SplitSimpleAuthLayoutProps) {
     useEffect(() => {
         document.documentElement.classList.remove('dark');
@@ -21,7 +23,8 @@ export default function SplitSimpleAuthLayout({
     return (
         <div className="auth-split-simple min-h-svh font-[family-name:var(--font-landing)] antialiased lg:grid lg:grid-cols-2">
             {/* Left — MIS project panel (desktop) */}
-            <div className="auth-mis-panel relative hidden flex-col justify-center px-10 xl:px-16 lg:flex">
+            <div className="auth-mis-panel relative hidden flex-col justify-center overflow-hidden px-10 xl:px-16 lg:flex">
+                <div className="auth-mis-glow" aria-hidden="true" />
                 <div className="relative z-10 max-w-md">
                     <div className="mb-8 flex items-center gap-3">
                         <div className="flex size-11 items-center justify-center rounded-xl bg-[#2563EB] shadow-sm">
@@ -57,9 +60,9 @@ export default function SplitSimpleAuthLayout({
                 </p>
             </div>
 
-            {/* Right — login form */}
-            <div className="flex flex-col justify-center bg-white px-4 py-10 sm:px-8 lg:px-12 xl:px-16">
-                <div className="mx-auto w-full max-w-[400px]">
+            {/* Right — auth form */}
+            <div className="flex flex-col justify-center overflow-y-auto bg-white px-4 py-10 sm:px-8 lg:px-12 xl:px-16">
+                <div className="mx-auto w-full" style={{ maxWidth: formMaxWidth }}>
                     <div className="mb-8 hidden lg:block">
                         <Link
                             href={route('home')}

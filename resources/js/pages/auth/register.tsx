@@ -1,15 +1,15 @@
-import { AuthInput } from '@/components/auth/auth-input';
-import { AuthPasswordField } from '@/components/auth/auth-password-field';
 import { RegisterSetupOverlay } from '@/components/auth/register-setup-overlay';
-import { AuthSubmitButton } from '@/components/auth/auth-submit-button';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import SplitSimpleAuthLayout from '@/layouts/auth/split-simple-auth-layout';
 import { BUSINESS_TYPES, type BusinessTypeValue } from '@/types/auth';
 import { Head, useForm } from '@inertiajs/react';
-import { Building2, Mail, User } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 interface RegisterForm {
@@ -44,96 +44,98 @@ export default function Register() {
         <>
             <RegisterSetupOverlay visible={processing} userName={data.name} />
 
-            <AuthLayout
-                title="Create Your Practice Workspace"
-                description="Start learning accounting using a professional accounting platform."
+            <SplitSimpleAuthLayout
+                title="Create account"
+                description="Set up your practice workspace to get started."
+                formMaxWidth="420px"
             >
                 <Head title="Create Account" />
 
-                <form className="space-y-5" onSubmit={submit} noValidate>
-                    <AuthInput
-                        icon={User}
-                        label="Full Name"
-                        id="name"
-                        type="text"
-                        required
-                        autoFocus
-                        tabIndex={1}
-                        autoComplete="name"
-                        placeholder="Alex Student"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        disabled={processing}
-                        error={errors.name}
-                    />
-
-                    <AuthInput
-                        icon={Mail}
-                        label="Email Address"
-                        id="email"
-                        type="email"
-                        required
-                        tabIndex={2}
-                        autoComplete="email"
-                        placeholder="you@school.edu"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                        disabled={processing}
-                        error={errors.email}
-                    />
-
-                    <AuthPasswordField
-                        id="password"
-                        label="Password"
-                        required
-                        tabIndex={3}
-                        autoComplete="new-password"
-                        placeholder="Create a secure password"
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        disabled={processing}
-                        error={errors.password}
-                        showStrength
-                    />
-
-                    <AuthPasswordField
-                        id="password_confirmation"
-                        label="Confirm Password"
-                        required
-                        tabIndex={4}
-                        autoComplete="new-password"
-                        placeholder="Confirm your password"
-                        value={data.password_confirmation}
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        disabled={processing}
-                        error={errors.password_confirmation}
-                    />
-
-                    <AuthInput
-                        icon={Building2}
-                        label="Practice Set Name"
-                        id="practice_set_name"
-                        type="text"
-                        tabIndex={5}
-                        placeholder="My Practice Set"
-                        value={data.practice_set_name}
-                        onChange={(e) => setData('practice_set_name', e.target.value)}
-                        disabled={processing}
-                        error={errors.practice_set_name}
-                        hint="Optional — defaults to your name if left blank."
-                    />
+                <form className="space-y-4" onSubmit={submit} noValidate>
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Full name</Label>
+                        <Input
+                            id="name"
+                            type="text"
+                            required
+                            autoFocus
+                            autoComplete="name"
+                            placeholder="Alex Student"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            disabled={processing}
+                        />
+                        <InputError message={errors.name} />
+                    </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="business_type" className="block text-sm font-medium text-[#0F172A]">
-                            Business Type <span className="font-normal text-[#94A3B8]">(optional)</span>
-                        </label>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            required
+                            autoComplete="email"
+                            placeholder="email@example.com"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            disabled={processing}
+                        />
+                        <InputError message={errors.email} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="password">Password</Label>
+                        <PasswordInput
+                            id="password"
+                            required
+                            autoComplete="new-password"
+                            placeholder="Password"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            disabled={processing}
+                        />
+                        <InputError message={errors.password} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                        <PasswordInput
+                            id="password_confirmation"
+                            required
+                            autoComplete="new-password"
+                            placeholder="Confirm password"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            disabled={processing}
+                        />
+                        <InputError message={errors.password_confirmation} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="practice_set_name">
+                            Practice set name <span className="font-normal text-[#94A3B8]">(optional)</span>
+                        </Label>
+                        <Input
+                            id="practice_set_name"
+                            type="text"
+                            placeholder="My Practice Set"
+                            value={data.practice_set_name}
+                            onChange={(e) => setData('practice_set_name', e.target.value)}
+                            disabled={processing}
+                        />
+                        <InputError message={errors.practice_set_name} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="business_type">
+                            Business type <span className="font-normal text-[#94A3B8]">(optional)</span>
+                        </Label>
                         <select
                             id="business_type"
-                            className="auth-select"
+                            className="flex h-11 w-full rounded-lg border border-input bg-background px-3 text-sm text-[#0F172A] shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB]/30"
                             value={data.business_type}
                             onChange={(e) => setData('business_type', e.target.value as BusinessTypeValue | '')}
                             disabled={processing}
-                            tabIndex={6}
                         >
                             <option value="">Select a business type</option>
                             {BUSINESS_TYPES.map(({ value, label }) => (
@@ -146,21 +148,21 @@ export default function Register() {
                     </div>
 
                     <div className="space-y-2">
-                        <div className="auth-checkbox-row">
+                        <div className="flex items-start gap-2">
                             <Checkbox
                                 id="terms"
                                 checked={data.terms}
                                 onCheckedChange={(checked) => setData('terms', checked === true)}
-                                tabIndex={7}
                                 disabled={processing}
+                                className="mt-0.5"
                             />
-                            <Label htmlFor="terms" className="cursor-pointer text-sm font-normal leading-relaxed text-[#475569]">
+                            <Label htmlFor="terms" className="cursor-pointer text-sm font-normal leading-relaxed text-[#64748B]">
                                 I agree to the{' '}
-                                <a href="#" className="auth-link">
+                                <a href="#" className="text-[#2563EB] hover:underline">
                                     Terms
                                 </a>{' '}
                                 and{' '}
-                                <a href="#" className="auth-link">
+                                <a href="#" className="text-[#2563EB] hover:underline">
                                     Privacy Policy
                                 </a>
                             </Label>
@@ -168,18 +170,23 @@ export default function Register() {
                         <InputError message={errors.terms} />
                     </div>
 
-                    <AuthSubmitButton loading={processing} tabIndex={8} disabled={!data.terms}>
-                        Create Practice Workspace
-                    </AuthSubmitButton>
+                    <Button
+                        type="submit"
+                        className="h-11 w-full rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8]"
+                        disabled={processing || !data.terms}
+                    >
+                        {processing && <LoaderCircle className="size-4 animate-spin" />}
+                        Create practice workspace
+                    </Button>
 
-                    <p className="text-center text-sm text-[#64748B]">
+                    <p className="pt-1 text-center text-sm text-[#64748B]">
                         Already have an account?{' '}
-                        <TextLink href={route('login')} className="auth-link" tabIndex={9}>
-                            Sign In
+                        <TextLink href={route('login')} className="text-[#2563EB]">
+                            Sign in
                         </TextLink>
                     </p>
                 </form>
-            </AuthLayout>
+            </SplitSimpleAuthLayout>
         </>
     );
 }
